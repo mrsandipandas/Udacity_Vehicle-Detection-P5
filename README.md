@@ -22,7 +22,7 @@ The main objectives of the project are:
 
 
 ### Preprocessing
-For a more robust detector, I downloaded the [Udacity labelled dataset](http://bit.ly/udacity-annotations-autti) (annotated by Autti) and pre-prossed the data to have a robust dataset for the vehicle and non-vehicle classes. I also down-scaled the images in accordance with the other training dataset provided in the exercise.
+For a more robust detector, I downloaded the [Udacity labelled dataset](http://bit.ly/udacity-annotations-autti) (annotated by Autti) and pre-prossed the data to have a robust dataset for the vehicle and non-vehicle classes and converted them to png format. I also down-scaled the images in accordance with the other training dataset provided in the exercise.
 
 ```
 def loaddata (csvfile):
@@ -38,9 +38,9 @@ def loaddata (csvfile):
             cropped_img = img[int(y1):int(y2), int(x1):int(x2)]
             scaled_img = cv2.resize(cropped_img, (64, 64), interpolation=cv2.INTER_NEAREST)
             if (line[6] in vehicle_class):
-                cv2.imwrite('train_data/vehicle/'+line[0],scaled_img)
+		cv2.imwrite('train_data/vehicle/'+line[0].split(".")[0]+'.png', img, [int(cv2.IMWRITE_PNG_COMPRESSION), 4])
             else:
-                cv2.imwrite('train_data/novehicle/'+line[0],scaled_img)
+                cv2.imwrite('train_data/novehicle/'+line[0].split(".")[0]+'.png', img, [int(cv2.IMWRITE_PNG_COMPRESSION), 4])
 ```
 
 ### Histogram of Oriented Gradients (HOG)
