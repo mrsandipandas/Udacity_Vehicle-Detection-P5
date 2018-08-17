@@ -12,8 +12,8 @@ The main objectives of the project are:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
+[image1]: ./images/car_not_car.png
+[image2]: ./images/HOG_example.jpg
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
@@ -42,17 +42,18 @@ def loaddata (csvfile):
 		cv2.imwrite('train_data/vehicle/'+line[0].split(".")[0]+'.png', img, [int(cv2.IMWRITE_PNG_COMPRESSION), 4])
             else:
                 cv2.imwrite('train_data/novehicle/'+line[0].split(".")[0]+'.png', img, [int(cv2.IMWRITE_PNG_COMPRESSION), 4])
-```
+``` 
+So, my training data consisted of 21645 vehicle class data and 15488 non-vehicle class data set.
 
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in Step 3: Histogram of Oriented Gradients (HOG) of the IPython notebook.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![alt text][image1]
+![Vehicle and non-vehicle sample images][image1]
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
