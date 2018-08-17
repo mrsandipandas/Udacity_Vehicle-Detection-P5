@@ -13,12 +13,13 @@ The main objectives of the project are:
 
 [//]: # (Image References)
 [image1]: ./images/car_not_car.png
-[image2]: ./images/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
+[image2]: ./images/car_colour_spaces.png
+[image3]: ./images/HOG_example.jpg
+[image4]: ./examples/sliding_windows.jpg
+[image5]: ./examples/sliding_window.jpg
+[image6]: ./examples/bboxes_and_heat.png
+[image7]: ./examples/labels_map.png
+[image8]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
 
@@ -57,10 +58,13 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+I explored the different colour spaces and chose YCrCv as this would give optimal gradients.
 
+![Colour spaces in sample images][image2]
 
-![alt text][image2]
+Here is an example using the HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+
+![HOG parameters for sample images][image3]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
