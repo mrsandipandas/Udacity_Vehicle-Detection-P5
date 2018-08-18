@@ -72,7 +72,7 @@ I tried various combinations of parameters and settled down with the following p
 
 ```
 colorspace = 'YCrCb'
-orientations=11
+orientations=9
 pix_per_cell = 16
 cells_per_block=(2, 2)
 hog_channel = 'ALL' 
@@ -81,7 +81,7 @@ hist_bins = 16
 
 ```
 
-With this configuration, I achieve an accuracy of `0.9789` and it requires `0.00296 seconds` to predict 10 labels with classifier. I also serialized the classifier in a pickled file, so that it could be used later on. The code is available under Step 8: Training a classifier.
+With this configuration, I achieve an accuracy of `0.9828` and it requires `0.0014 seconds` to predict 10 labels with classifier. I also serialized the classifier in a pickled file, so that it could be used later on. The code is available under Step 8: Training a classifier.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
@@ -98,7 +98,7 @@ First, I used the implemented a version of `sliding window` function to draw the
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched using YCrCb, 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example of the sliding window search with these features.
+Ultimately I searched using YCrCb, 3-channel HOG features plus and histograms of color in the feature vector, which provided a nice result.  Here are some example of the sliding window search with these features.
 
 ![Sliding window search][image5]
 
@@ -133,5 +133,5 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+In the search window sometimes, there are more than one road regions classified as car and as a result this reflects back in thevideo output. I have tried to mitigate this problem by increasing the no. of consecutive frames positive readout. This helps to some extent in the cancelling out of the false positives. However, to absolutely minimize this problem more training data could be collected. Given some more time, I would put the road line detector together as well. Also I would implement a more robust version of sliding window search by controlling the X-direction of search as well. 
 
