@@ -14,13 +14,13 @@ The main objectives of the project are:
 [//]: # (Image References)
 [image1]: ./images/car_not_car.png
 [image2]: ./images/car_colour_spaces.png
-[image3]: ./images/HOG_example.jpg
-[image4]: ./examples/sliding_windows.jpg
-[image5]: ./examples/sliding_window.jpg
-[image6]: ./examples/bboxes_and_heat.png
-[image7]: ./examples/labels_map.png
-[image8]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[image3]: ./images/HOG_example.png
+[image4]: ./images/sliding_window.png
+[image5]: ./images/sliding_window_search.png
+[image6]: ./images/bboxes_and_heat.png
+[image7]: ./images/labels_map.png
+[image8]: ./images/output_bboxes.png
+[video1]: ./videos/project_video_out.mp4
 
 
 ### Preprocessing
@@ -68,31 +68,46 @@ Here is an example using the HOG parameters of `orientations=9`, `pixels_per_cel
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I tried various combinations of parameters and settled down with the following parameters.
+
+```
+colorspace = 'YCrCb'
+orientations=11
+pix_per_cell = 16
+cells_per_block=(2, 2)
+hog_channel = 'ALL' 
+spatial_size = (16, 16)
+hist_bins = 16
+
+```
+
+With this configuration, I achieve an accuracy of `0.9789` and it requires `0.00296 seconds` to predict 10 labels with classifier. I also serialized the classifier in a pickled file, so that it could be used later on. The code is available under Step 7: Training a classifier.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+I trained a linear SVM using a combination of histogram count, spatial binning and HOG features. The helper function can be found under 
+`extract_features` in Step 3. 
 
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+First, I used the implemented a version of `sliding window` function to draw the boxes in half of the image. This was to verify where the search regions would be. The results can be seen below.
 
-![alt text][image3]
+![Sliding window][image4]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched using YCrCb, 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example of the sliding window search with these features.
 
-![alt text][image4]
+![Sliding window search][image5]
+
 ---
 
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](videos/project_video_out.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -101,16 +116,15 @@ I recorded the positions of positive detections in each frame of the video.  Fro
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are six frames and their corresponding heatmaps:
+### Here is a image with bounding boxes for the detected vehicles and its corresponding corresponding heatmap:
 
-![alt text][image5]
+![Bounding box and heat map][image6]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap:
+![Labels of the heatmap][image7]
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
+### Here the resulting bounding boxes are drawn onto the video frames in the series:
+![Integrated bounding boxes][image8]
 
 
 ---
@@ -119,5 +133,5 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
 
