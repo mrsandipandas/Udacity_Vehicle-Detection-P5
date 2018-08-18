@@ -24,7 +24,7 @@ The main objectives of the project are:
 
 
 ### Preprocessing
-For a more robust detector, I downloaded the [Udacity labelled dataset](http://bit.ly/udacity-annotations-autti) (annotated by Autti) and pre-prossed the data to have a robust dataset for the vehicle and non-vehicle classes and converted them to png format. I also down-scaled the images in accordance with the other training dataset provided in the exercise.
+For a more robust detector, I downloaded the [Udacity labelled dataset](http://bit.ly/udacity-annotations-autti) (annotated by Autti) and pre-prossed the data to have more labelled dataset for the vehicle and non-vehicle classes and converted them to png format. I also down-scaled the images in accordance with the other training dataset provided in the exercise.
 
 ```
 def loaddata (csvfile):
@@ -50,7 +50,7 @@ So, my training data consisted of 21645 vehicle class data and 15488 non-vehicle
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in Step 3: Histogram of Oriented Gradients (HOG) of the IPython notebook.
+The code for this step is contained in Step 4: Histogram of Oriented Gradients (HOG) of the IPython notebook.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -81,12 +81,12 @@ hist_bins = 16
 
 ```
 
-With this configuration, I achieve an accuracy of `0.9789` and it requires `0.00296 seconds` to predict 10 labels with classifier. I also serialized the classifier in a pickled file, so that it could be used later on. The code is available under Step 7: Training a classifier.
+With this configuration, I achieve an accuracy of `0.9789` and it requires `0.00296 seconds` to predict 10 labels with classifier. I also serialized the classifier in a pickled file, so that it could be used later on. The code is available under Step 8: Training a classifier.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
 I trained a linear SVM using a combination of histogram count, spatial binning and HOG features. The helper function can be found under 
-`extract_features` in Step 3. 
+`extract_features` in Step 4. 
 
 ### Sliding Window Search
 
@@ -112,7 +112,7 @@ Here's a [link to my video result](videos/project_video_out.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
