@@ -58,7 +58,7 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-I explored the different colour spaces and chose YCrCv as this would give optimal gradients.
+I explored the different colour spaces and chose YUV as this would give optimal gradients.
 
 ![Colour spaces in sample images][image2]
 
@@ -71,8 +71,8 @@ Here is an example using the HOG parameters of `orientations=9`, `pixels_per_cel
 I tried various combinations of parameters and settled down with the following parameters.
 
 ```
-colorspace = 'YCrCb'
-orientations=9
+colorspace = 'YUV'
+orientations = 11
 pix_per_cell = 16
 cells_per_block=(2, 2)
 hog_channel = 'ALL' 
