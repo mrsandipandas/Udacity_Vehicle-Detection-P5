@@ -96,6 +96,18 @@ First, I used the implemented a version of `sliding window` function to draw the
 
 ![Sliding window][image4]
 
+I considered only half of the image in Y-direction as being a part of the road. I divided the scale of the search window as follows (`height = image.shape[0]//2`, `start = image.shape[0]//2`):
+* Initially towards the middle of the image, I used smaller scales, as near the horizon the sizes of the cars would be small. This search window continued as follows -
+```
+ystart = start
+ystop = start + height//3 
+```
+* For the later search windows, I increased the scale and the search boundary as well, as the objects nearer could take up significant portion of the image shape and can occulude the horizon. So my last search window looked as - 
+```
+ystart = start
+ystop = start + height 
+```
+
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched using YCrCb, 3-channel HOG features plus and histograms of color in the feature vector, which provided a nice result.  Here are some example of the sliding window search with these features.
@@ -133,5 +145,10 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-In the search window sometimes, there are more than one road regions classified as car and as a result this reflects back in thevideo output. I have tried to mitigate this problem by increasing the no. of consecutive frames positive readout. This helps to some extent in the cancelling out of the false positives. However, to absolutely minimize this problem more training data could be collected. Given some more time, I would put the road line detector together as well. Also I would implement a more robust version of sliding window search by controlling the X-direction of search as well. 
+* In the pipeline, more augmentation of the training data can be done. 
+* Also, the distant cars are not detected by the pipeline. 
+* Moreover, oncoming cars cannot be tracked as well. 
+* Sometimes, in the pipeline, we are not able to track the car. This may be beacuse of the accuracy of the classifier.
+
+To track more intelligently, a state based monitoring with Kalman filters can be applied. Also, it would be interesting to solve the problem with Neural network approach.
 
